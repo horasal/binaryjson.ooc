@@ -5,7 +5,7 @@ An ooc implemention of KLab's Binary JSON.
 
 ## Introduction
 
-The original description can be found at KLab's game engine [PlaygroundOSS](https://github.com/KLab/PlaygroundOSS). This engine hasn't been updated for a while but almost everything is still being used in KLab's game, such as [school idol festival](https://play.google.com/store/apps/details?id=klb.android.lovelive).
+The original description can be found in KLab's game engine [PlaygroundOSS](https://github.com/KLab/PlaygroundOSS). This engine hasn't been updated for a while but almost everything is still being used in KLab's game, such as [school idol festival](https://play.google.com/store/apps/details?id=klb.android.lovelive).
 
 ## Feature
 
@@ -24,7 +24,7 @@ To modify the content of a JsonNode, access **data** directly. (Will be updated 
 
 To parse a binary-json, use class **BJson**. BJson will parse a binary-json file into JsonNode, and
 save results in **BJson root**. Notice that root is a JsonArray. It means if your json file is a single-object,
-you should use **BJson root data[0]**.
+you should use BJson root data[0].
 
 ## Usage
 Currently it only accepts BinarySequenceReader
