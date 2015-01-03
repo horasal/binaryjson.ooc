@@ -3,7 +3,7 @@ BinaryJson
 
 An ooc implemention of KLab's Binary JSON.
 
-** Introduction
+## Introduction
 
 The original description can be found at KLab's game engine [PlaygroundOSS](https://github.com/KLab/PlaygroundOSS). This engine hasn't been updated for a while but almost everything is still being used in KLab's game, such as [school idol festival](https://play.google.com/store/apps/details?id=klb.android.lovelive).
 
