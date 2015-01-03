@@ -1,0 +1,4 @@
+Name: bjson
+Description: Binary-Json loader
+SourcePath: source
+Imports: bjson
