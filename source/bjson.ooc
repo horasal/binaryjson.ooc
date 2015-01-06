@@ -417,6 +417,14 @@ BJson : class{
 
     root: JsonNode = JsonArray new()
 
+    toString: func -> String{
+        ret := ""
+        for(j in root){
+            ret += j toString()
+        }
+        ret
+    }
+
     init: func(buffer: BinarySequenceReader){
         if(buffer u16() != 0xFFFF){
             Exception new("Not a binary Json file.") throw()
