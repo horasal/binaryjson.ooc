@@ -46,4 +46,3 @@ Convert a binary-json in memory to text:
 * More tests
 * Add get ~index and operator overload for array/object
 * endianness safe
-* more error check
