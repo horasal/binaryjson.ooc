@@ -53,7 +53,7 @@ CP: cover{
     memberCache: Int
 }
 
-JsonNode: abstract class{ 
+JsonNode: abstract class{
     indentLevel: Int = 0
 
     indent: func -> String{
@@ -183,11 +183,11 @@ JsonInt64: class extends JsonNode{
     get: func <T> (T: Class) -> T{
         match(T){
             case Int64 => return data
-            case UInt64 => return data
+            case UInt64 => return data as UInt64
             case String => return data toString()
             case => Exception new("Can not get the type %s" format(T name)) throw()
         }
-        
+
         null
     }
 
@@ -209,10 +209,10 @@ JsonInt32: class extends JsonNode{
 
     get: func <T> (T: Class) -> T{
         match(T){
-            case Int64 => return data
-            case UInt64 => return data 
+            case Int64 => return data as Int64
+            case UInt64 => return data as UInt64
             case Int32 => return data
-            case UInt32 => return data
+            case UInt32 => return data as UInt32
             case String => return data toString()
             case => Exception new("Can not get the type %s" format(T name)) throw()
         }
@@ -237,12 +237,12 @@ JsonInt16: class extends JsonNode{
 
     get: func <T> (T: Class) -> T{
         match(T){
-            case Int64 => return data
-            case UInt64 => return data 
-            case Int32 => return data
-            case UInt32 => return data
+            case Int64 => return data as Int64
+            case UInt64 => return data as UInt64
+            case Int32 => return data as Int32
+            case UInt32 => return data as UInt32
             case Int16 => return data
-            case UInt16 => return data
+            case UInt16 => return data as UInt16
             case String => return data toString()
             case => Exception new("Can not get the type %s" format(T name)) throw()
         }
@@ -267,14 +267,14 @@ JsonInt8: class extends JsonNode{
 
     get: func <T> (T: Class) -> T{
         match(T){
-            case Int64 => return data
-            case UInt64 => return data
-            case Int32 => return data
-            case UInt32 => return data
-            case Int16 => return data
-            case UInt16 => return data
+            case Int64 => return data as Int64
+            case UInt64 => return data as UInt64
+            case Int32 => return data as Int32
+            case UInt32 => return data as UInt32
+            case Int16 => return data as Int16
+            case UInt16 => return data as UInt16
             case Int8 => return data
-            case UInt8 => return data
+            case UInt8 => return data as UInt8
             case String => return data toString()
             case => Exception new("Can not get the type %s" format(T name)) throw()
         }
@@ -367,8 +367,8 @@ JsonDouble: class extends JsonNode{
 
     get: func <T> (T: Class) -> T{
         match(T){
-            case Float => return data
-            case Double => return data 
+            case Float => return data as Float
+            case Double => return data
             case String => return data toString()
             case => Exception new("Can not get the type %s" format(T name)) throw()
         }
@@ -394,7 +394,7 @@ JsonFloat: class extends JsonNode{
     get: func <T> (T: Class) -> T{
         match(T){
             case Float => return data
-            case Double => return data 
+            case Double => return data as Double
             case String => return data toString()
             case => Exception new("Can not get the type %s" format(T name)) throw()
         }
@@ -419,7 +419,7 @@ BJson : class{
 
     toString: func -> String{
         ret := ""
-        for(j in root){
+        for(j in root as JsonArray data){
             ret += j toString()
         }
         ret
@@ -442,7 +442,7 @@ BJson : class{
         while(buffer hasNext?()){
             match(buffer u8()){
                 case BJsonOP END => break
-                case BJsonOP OPEN_OBJ => 
+                case BJsonOP OPEN_OBJ =>
                     size := buffer s32()
                     stack push(JsonObject new())
                     stack peek() indentLevel = stack size - 1
