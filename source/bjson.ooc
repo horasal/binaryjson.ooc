@@ -53,7 +53,7 @@ CP: cover{
     memberCache: Int
 }
 
-JsonNode: abstract class{
+JsonNode: abstract class{ 
     indentLevel: Int = 0
 
     indent: func -> String{
@@ -80,7 +80,7 @@ JsonObject: class extends JsonNode{
         match(T){
             case HashMap => return data
             case ArrayList<JsonNode> => return data keys
-            case => Exception new("Can not get the type %s" format(T name)) throw()
+            case => Exception new("Can not get the type %s from Object" format(T name)) throw()
         }
         null
     }
@@ -121,7 +121,7 @@ JsonArray: class extends JsonNode{
     get: func <T> (T: Class) -> T{
         match(T){
             case ArrayList<JsonNode> => return data
-            case => Exception new("Can not get the type %s" format(T name)) throw()
+            case => Exception new("Can not get the type %s from Array" format(T name)) throw()
         }
         null
     }
@@ -158,7 +158,7 @@ JsonString: class extends JsonNode{
         match(T){
             case String => return data as String
             case CString => return data toCString() as CString
-            case => Exception new("Can not get the type %s" format(T name)) throw()
+            case => Exception new("Can not get the type %s from string" format(T name)) throw()
         }
 
         null
@@ -182,12 +182,14 @@ JsonInt64: class extends JsonNode{
 
     get: func <T> (T: Class) -> T{
         match(T){
-            case Int64 => return data
-            case UInt64 => return data as UInt64
-            case String => return data toString()
-            case => Exception new("Can not get the type %s" format(T name)) throw()
+            case Int64 => return data as Int64
+            case UInt64 => return data as Int64 as UInt64
+            case String => return data as Int64 toString()
+            case Double => return data as Int64 as Double
+            case Float => return data as Int64 as Float
+            case => Exception new("Can not get the type %s from Int64" format(T name)) throw()
         }
-
+        
         null
     }
 
@@ -209,12 +211,14 @@ JsonInt32: class extends JsonNode{
 
     get: func <T> (T: Class) -> T{
         match(T){
-            case Int64 => return data as Int64
-            case UInt64 => return data as UInt64
-            case Int32 => return data
-            case UInt32 => return data as UInt32
-            case String => return data toString()
-            case => Exception new("Can not get the type %s" format(T name)) throw()
+            case Int64 => return data as Int32 as Int64
+            case UInt64 => return data as Int32 as UInt64
+            case Int32 => return data as Int32
+            case UInt32 => return data as Int32 as UInt32
+            case String => return data as Int32 toString()
+            case Float => return data as Int32 as Float
+            case Double => return data as Int32 as Double
+            case => Exception new("Can not get the type %s from Int32" format(T name)) throw()
         }
         null
     }
@@ -237,14 +241,16 @@ JsonInt16: class extends JsonNode{
 
     get: func <T> (T: Class) -> T{
         match(T){
-            case Int64 => return data as Int64
-            case UInt64 => return data as UInt64
-            case Int32 => return data as Int32
-            case UInt32 => return data as UInt32
-            case Int16 => return data
-            case UInt16 => return data as UInt16
-            case String => return data toString()
-            case => Exception new("Can not get the type %s" format(T name)) throw()
+            case Int64 => return data as Int16 as Int64
+            case UInt64 => return data as Int16 as UInt64
+            case Int32 => return data as Int16 as Int32
+            case UInt32 => return data as Int16 as UInt32
+            case Int16 => return data as Int16
+            case UInt16 => return data as Int16 as UInt16
+            case String => return data as Int16 toString()
+            case Float => return data as Int16 as Float
+            case Double => return data as Int16 as Double
+            case => Exception new("Can not get the type %s from Int16" format(T name)) throw()
         }
         null
     }
@@ -261,22 +267,24 @@ JsonInt16: class extends JsonNode{
 }
 
 JsonInt8: class extends JsonNode{
-    data: Int64
+    data: Int8
 
     init: func(=data)
 
     get: func <T> (T: Class) -> T{
         match(T){
-            case Int64 => return data as Int64
-            case UInt64 => return data as UInt64
-            case Int32 => return data as Int32
-            case UInt32 => return data as UInt32
-            case Int16 => return data as Int16
-            case UInt16 => return data as UInt16
-            case Int8 => return data
-            case UInt8 => return data as UInt8
-            case String => return data toString()
-            case => Exception new("Can not get the type %s" format(T name)) throw()
+            case Int64 => return data as Int8 as Int64
+            case UInt64 => return data as Int8 as UInt64
+            case Int32 => return data as Int8 as Int32
+            case UInt32 => return data as Int8 as UInt32
+            case Int16 => return data as Int8 as Int16
+            case UInt16 => return data as Int8 as UInt16
+            case Int8 => return data as Int8
+            case UInt8 => return data as Int8 as UInt8
+            case String => return data as Int8 toString()
+            case Float => return data as Int8 as Float
+            case Double => return data as Int8 as Double
+            case => Exception new("Can not get the type %s Int8" format(T name)) throw()
         }
         null
     }
@@ -307,7 +315,7 @@ JsonNull: class extends JsonNode{
             case UInt8 => return 0
             case Pointer => return null
             case String => return "Null"
-            case => Exception new("Can not get the type %s" format(T name)) throw()
+            case => Exception new("Can not get the type %s from null" format(T name)) throw()
         }
         null
     }
@@ -344,7 +352,7 @@ JsonBoolean: class extends JsonNode{
             case UInt8 => return toInt()
             case Bool => return data
             case String => return data toString()
-            case => Exception new("Can not get the type %s" format(T name)) throw()
+            case => Exception new("Can not get the type %s from boolean" format(T name)) throw()
         }
         null
     }
@@ -367,10 +375,10 @@ JsonDouble: class extends JsonNode{
 
     get: func <T> (T: Class) -> T{
         match(T){
-            case Float => return data as Float
-            case Double => return data
-            case String => return data toString()
-            case => Exception new("Can not get the type %s" format(T name)) throw()
+            case Float => return data as Double as Float
+            case Double => return data as Double
+            case String => return data as Double toString()
+            case => Exception new("Can not get the type %s from Double" format(T name)) throw()
         }
         null
     }
@@ -393,10 +401,10 @@ JsonFloat: class extends JsonNode{
 
     get: func <T> (T: Class) -> T{
         match(T){
-            case Float => return data
-            case Double => return data as Double
-            case String => return data toString()
-            case => Exception new("Can not get the type %s" format(T name)) throw()
+            case Float => return data as Float
+            case Double => return data as Float as Double
+            case String => return data as Float toString()
+            case => Exception new("Can not get the type %s from Float" format(T name)) throw()
         }
         null
     }
@@ -415,12 +423,12 @@ JsonFloat: class extends JsonNode{
 BJson : class{
     cpList: ArrayList<CP> = ArrayList<CP> new()
 
-    root: JsonNode = JsonArray new()
+    root: JsonArray = JsonArray new()
 
     toString: func -> String{
         ret := ""
-        for(j in root as JsonArray data){
-            ret += j toString()
+        for(i in root data){
+            ret += i toString()
         }
         ret
     }
@@ -442,7 +450,7 @@ BJson : class{
         while(buffer hasNext?()){
             match(buffer u8()){
                 case BJsonOP END => break
-                case BJsonOP OPEN_OBJ =>
+                case BJsonOP OPEN_OBJ => 
                     size := buffer s32()
                     stack push(JsonObject new())
                     stack peek() indentLevel = stack size - 1
