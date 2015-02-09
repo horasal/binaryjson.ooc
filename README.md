@@ -42,7 +42,6 @@ Convert a binary-json in memory to text:
 
 ## TODO
 
-* Better get (Use Cell<T>?)
 * More tests
 * Add get ~index and operator overload for array/object
 * endianness safe
